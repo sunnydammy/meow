@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function Navigation() {
-    // Link has to be inside Router
+    // Link는 Router안에 위치해야 한다 (App.js)
     return <div>
         <Link to="/">Home</Link>
     </div>
