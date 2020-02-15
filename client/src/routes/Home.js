@@ -3,20 +3,25 @@ import axios from "axios";
 import Book from "../components/Book";
 import "./Home.css";
 
+//카카오 검색 api key
+//https://developers.kakao.com/docs/restapi/search#%EC%B1%85-%EA%B2%80%EC%83%89
 const API_KEY = "2cdc40bcac4648a9f88fdc5f2767da55";
 
 class Home extends React.Component{
     state = {
-      isLoading: true,
+      isLoading: false,
       books: []
     };
+    
+    input = null;
     getBooks = async () => {
+        this.setState({isLoading : true});
       const {
           data: { documents }
       } = await axios.get(
         "https://dapi.kakao.com/v3/search/book?target=title",{
             params: { // query string
-                query: 'Harry'
+                query: this.input.value
             },
             headers: { // 요청 헤더
               'Authorization': `KakaoAK ${API_KEY}`
@@ -24,15 +29,18 @@ class Home extends React.Component{
         });
       this.setState({  isLoading: false, books: documents});
     };
-    // componentDidMount() {
-    //   this.getBooks();
-    // };
+    keyUpHandler = () => {
+        if (window.event.keyCode === 13) {
+            // 엔터키가 눌렸을 때 실행할 내용
+            this.getBooks();
+       }
+    }
     render(){
     const { isLoading, books } = this.state;
     return(
         <div className="search">
-            <input id="input" placeholder="Find Book!" value="Harry"/>
-            <button id="search" onClick={this.getBooks}>Search</button>
+            <input placeholder="Find Book!" onKeyUp={this.keyUpHandler} ref={ref => { this.input = ref }}/>
+            <button onClick={this.getBooks}>Search</button>
             <section className="container">
             {isLoading ? (
                 <div className="loader">
@@ -42,7 +50,11 @@ class Home extends React.Component{
                 <ul className="books">
                 {books.map(book => (
                 <Book
-                    item={book.title}
+                    key={book.isbn}
+                    title={book.title}
+                    author={book.authors}
+                    thumbnail={book.thumbnail}
+                    price={book.price}
                 />
                 ))}
                 </ul>
