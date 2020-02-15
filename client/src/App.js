@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Route } from 'react-router-dom';
+import { Route, BrowserRouter } from 'react-router-dom';
 import Navigation from "./components/Navigation";
 import Home from "./routes/Home";
 import KakaoAuth from "./routes/KakaoAuth";
@@ -7,11 +7,14 @@ import './App.css';
 
 function App() {
   return (
-    <HashRouter>
+    // <HashRouter>
+    <BrowserRouter>
       <Navigation />
       <Route path="/" exact={true} component={Home}></Route>
+      <Route path="/kakao_auth/:params" component={KakaoAuth}></Route>
       <Route path="/kakao_auth" exact={true} component={KakaoAuth}></Route>
-    </HashRouter>
+    </BrowserRouter>
+    // </HashRouter>
   );
 }
 
