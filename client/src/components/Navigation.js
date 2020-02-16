@@ -6,6 +6,7 @@ function Navigation() {
     return <div>
         <Link to="/">Home</Link>
         <Link to="/kakao_auth">KakaoAuth</Link>
+        <Link to="/naver_auth">NaverAuth</Link>
     </div>
 }
 
