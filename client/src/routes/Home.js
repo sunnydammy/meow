@@ -39,16 +39,21 @@ class Home extends React.Component {
   render() {
     const { isLoading, books } = this.state;
     return (
-      <div className="search">
-        <input
-          placeholder="Find Book!"
-          onKeyUp={this.keyUpHandler}
-          ref={ref => {
-            this.input = ref;
-          }}
-        />
-        <button onClick={this.getBooks}>Search</button>
-        <section className="container">
+      <section className="container">
+        <div className="container__search">
+          <input
+            className="container__search-input"
+            placeholder="Find Book!"
+            onKeyUp={this.keyUpHandler}
+            ref={ref => {
+              this.input = ref;
+            }}
+          />
+          <span className="container__search-click" onClick={this.getBooks}>
+            <i class="fas fa-search"></i>
+          </span>
+        </div>
+        <div className="container__result">
           {isLoading ? (
             <div className="loader">
               <span className="loader__text">Loading...</span>
@@ -68,8 +73,8 @@ class Home extends React.Component {
               ))}
             </ul>
           )}
-        </section>
-      </div>
+        </div>
+      </section>
     );
   }
 }
