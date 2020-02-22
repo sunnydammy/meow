@@ -10,4 +10,18 @@
 
 .nav {
   background-color: #d86351;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  color: #eff3f7;
+  padding-top: 10px;
+}
+
+.nav__route a {
+  margin-right: 30px;
+  color: inherit;
+}
+
+.nav__route {
+  padding-top: 20px;
 }
