@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css?family=Nanum+Myeongjo&display=swap");
+/* @import url("https://fonts.googleapis.com/css?family=Gugi&display=swap"); */
+
+.nav__title {
+  display: block;
+  font-size: 40px;
+  font-family: "Nanum Myeongjo", serif;
+  /* font-family: "Gugi", cursive; */
+}
+
+.nav {
+  background-color: #d86351;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  color: #eff3f7;
+  padding-top: 10px;
+}
+
+.nav__route a {
+  margin-right: 30px;
+  color: inherit;
+}
+
+.nav__route {
+  padding-top: 20px;
+}

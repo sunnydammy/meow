@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const url = require('url');
 const db = require('../database/db');
-const db_user = require('../database/db_user');
 
 // kakao_auth
 
