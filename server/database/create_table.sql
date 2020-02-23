@@ -26,3 +26,14 @@ values (
     'test@naver.com',
     'test'
 );
+
+insert into user (
+    nick_name,
+    email_addr,
+    pwd
+)
+values (
+    'test2',
+    'test2@naver.com',
+    'test2'
+);

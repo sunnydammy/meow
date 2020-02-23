@@ -1,12 +1,9 @@
-const express    = require('express');
+const express = require('express');
 const bodyParser = require('body-parser');
-const app        = express();
-const port       = process.env.PORT || 5000;
+const { handleError, ErrorHandler } = require('./error/error');
 
-const mysql      = require('mysql');
-const db_config  = require('./config/database');
-
-const db_con     = mysql.createConnection(db_config);
+const app = express();
+const port = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -15,19 +12,44 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // app.get('/', (req, res) => res.send('Sorry, this is not the web page you are looking for.'));
 
 
-// kakao_auth
+// mount kakao_auth router on the app
 const kakao_auth = require('./routers/kakao_auth');
 app.use('/kakao_auth', kakao_auth);
 
-app.get('/', function(req, res){
+app.all('*', (req, res) => {
+    // 501: Not Implemented (구현되지 않음)
 
-    db_con.query('select * from user', function(err, rows) {
-      if(err) throw err;
-  
-      console.log('The solution is: ', rows);
-      res.send(rows);
+    // res.status(501).json({
+    //     message: 'This Method is Not Implemented'
+    // });
 
-    });
-  });
+    // ex
+    // throw new ErrorHandler(404, '');
+
+});
+
+// test code for err
+// app.get('*', function (req, res, next) {
+//     throw new Error('error has been occured');
+// });
+
+// test code for next
+// app.get('*', function (req, res, next) {
+//     console.log('test');
+//     next('route');
+// }, function (req, res, next) {
+//     console.log('when it called next');
+
+// });
+
+// app.get('*', function (req, res, next) {
+//     console.log("when it called next('route')");
+// });
+
+// a middleware function with no mount path. This code is executed for every request to the router
+app.use(function (err, req, res, next) {
+    console.log("handle error");
+    handleError(err, res);
+});
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
