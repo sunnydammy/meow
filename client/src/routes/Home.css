@@ -1,5 +1,17 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* height: 500px; */
+  flex-direction: column;
+}
+
+.container > div {
+  margin-top: 30px;
+}
+
 .container__search {
-  height: 500px;
+  /* height: 500px; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,4 +34,9 @@
   vertical-align: middle;
   margin-left: 10px;
   cursor: pointer;
+}
+
+.books {
+  list-style: none;
+  padding-left: 0px;
 }

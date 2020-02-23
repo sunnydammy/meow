@@ -1,29 +1,46 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "./Book.css";
 
-function Book({ id, title, author, thumbnail, price, contents }) {
+function Book({
+  id,
+  title,
+  author,
+  thumbnail,
+  price,
+  contents,
+  publisher,
+  datetime
+}) {
   return (
-    <li className="book" key={id}>
-      <Link
-        to={{
-          pathname: `/book/${id}`,
-          state: {
-            id,
-            title,
-            author,
-            thumbnail,
-            price,
-            contents
-          }
-        }}
-      >
-        <div>
-          <h3>{title}</h3>
-          <h5>{author.join()}</h5>
+    <li key={id}>
+      <div className="book">
+        <Link
+          to={{
+            pathname: `/book/${id}`,
+            state: {
+              id,
+              title,
+              author,
+              thumbnail,
+              price,
+              contents
+            }
+          }}
+        >
           <img src={thumbnail} alt={title}></img>
+        </Link>
+        <div className="book__content">
+          <h4>{title}</h4>
+          <span>{author.join()}</span>
+          <span> | {publisher}</span>
+          <span>
+            {" "}
+            | {datetime.getFullYear()}년 {datetime.getMonth()}월
+          </span>
           <h5>{price.toLocaleString()}원</h5>
         </div>
-      </Link>
+      </div>
     </li>
   );
 }

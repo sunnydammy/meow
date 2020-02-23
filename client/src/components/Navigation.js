@@ -9,12 +9,12 @@ function Navigation() {
       <span className="nav__title">책을 검색하는 사이트이다</span>
       <div className="nav__route">
         <Link to="/">
-          <i class="fas fa-home">Home</i>
+          <i className="fas fa-home">Home</i>
         </Link>
         {/* <Link to="/kakao_auth">KakaoAuth</Link> */}
         {/* <Link to="/naver_auth">NaverAuth</Link> */}
         <Link to="/login">
-          <i class="fas fa-user">Login</i>
+          <i className="fas fa-user">Login</i>
         </Link>
       </div>
     </nav>

@@ -11,11 +11,11 @@ class Detail extends React.Component {
     const { location } = this.props;
     if (location.state) {
       return (
-        <section className="container">
+        <div className="container">
           <h1>{location.state.title}</h1>
           <img src={location.state.thumbnail} alt={location.state.title}></img>
           <span>{location.state.contents}</span>
-        </section>
+        </div>
       );
     } else {
       return null;
