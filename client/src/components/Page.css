@@ -1,0 +1,9 @@
+.container__page {
+  display: flex;
+  justify-content: space-around;
+}
+
+.container__page > a {
+  background-color: #f8f8f8;
+  margin: 2px;
+}

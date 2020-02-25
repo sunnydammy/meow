@@ -7,7 +7,7 @@ import "./Home.css";
 //카카오 검색 api key
 //https://developers.kakao.com/docs/restapi/search#%EC%B1%85-%EA%B2%80%EC%83%89
 const API_KEY = "2cdc40bcac4648a9f88fdc5f2767da55";
-const SEARCH_COUNT = 10;
+const SEARCH_COUNT = 20;
 
 class Home extends React.Component {
   state = {
@@ -17,14 +17,16 @@ class Home extends React.Component {
   };
 
   input = null;
-  getBooks = async () => {
+  getBooks = async page => {
     this.setState({ isLoading: true });
     const { data } = await axios.get(
       "https://dapi.kakao.com/v3/search/book?target=title",
       {
         params: {
           // query string
-          query: this.input.value
+          query: this.input.value,
+          page: page ? page : 1,
+          size: SEARCH_COUNT
         },
         headers: {
           // 요청 헤더
@@ -44,8 +46,18 @@ class Home extends React.Component {
       this.getBooks();
     }
   };
+  componentDidMount() {
+    const { location, history } = this.props;
+    if (location.state === undefined) {
+      history.push("/");
+    } else {
+      this.getBooks(this.props.match.params.page);
+    }
+  }
   render() {
     const { isLoading, books, totalCount } = this.state;
+    let container__result = "container__result";
+    if (!isLoading) container__result = "";
     return (
       <section className="container">
         <div className="container__search">
@@ -62,31 +74,35 @@ class Home extends React.Component {
             <i class="fas fa-search"></i>
           </span>
         </div>
-        <div className="container__result">
-          {isLoading ? (
+        <div>
+          {/* {isLoading ? (
             <div className="loader">
               <span className="loader__text">Loading...</span>
             </div>
+          ) : ( */}
+          {books.length > 0 ? (
+            <div className={container__result}>
+              <ul className="books">
+                {books.map((book, index) => (
+                  <Book
+                    key={index}
+                    id={index}
+                    title={book.title}
+                    author={book.authors}
+                    thumbnail={book.thumbnail}
+                    price={book.price}
+                    contents={book.contents}
+                    publisher={book.publisher}
+                    datetime={new Date(book.datetime)}
+                  />
+                ))}
+              </ul>
+              <Page totalCount={totalCount} searchCount={SEARCH_COUNT} />
+            </div>
           ) : (
-            <ul className="books">
-              {books.map((book, index) => (
-                <Book
-                  key={index}
-                  id={index}
-                  title={book.title}
-                  author={book.authors}
-                  thumbnail={book.thumbnail}
-                  price={book.price}
-                  contents={book.contents}
-                  publisher={book.publisher}
-                  datetime={new Date(book.datetime)}
-                />
-              ))}
-            </ul>
+            <div></div>
           )}
-        </div>
-        <div className="container__page">
-          <Page totalCount={totalCount} searchCount={SEARCH_COUNT} />
+          {/* )} */}
         </div>
       </section>
     );
