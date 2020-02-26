@@ -13,7 +13,8 @@ class Home extends React.Component {
   state = {
     isLoading: false,
     books: [],
-    totalCount: 0
+    totalCount: 0,
+    currentPage: 1
   };
 
   input = null;
@@ -46,15 +47,25 @@ class Home extends React.Component {
       this.getBooks();
     }
   };
-  componentDidMount() {
+  componentWillMount() {
+    console.log("componentWillMount");
     const { location, history } = this.props;
-    if (location.state === undefined) {
+    const page = this.props.match.params.page;
+    if (page === undefined) {
       history.push("/");
     } else {
-      this.getBooks(this.props.match.params.page);
+      this.setState({ currentPage: page });
+      // this.getBooks(page);
+    }
+  }
+  componentDidMount() {
+    console.log("componentDidMount");
+    if (this.state.page !== undefined) {
+      this.getBooks(this.state.page);
     }
   }
   render() {
+    console.log("render");
     const { isLoading, books, totalCount } = this.state;
     let container__result = "container__result";
     if (!isLoading) container__result = "";
@@ -71,7 +82,7 @@ class Home extends React.Component {
             value="해리포터"
           />
           <span className="container__search-click" onClick={this.getBooks}>
-            <i class="fas fa-search"></i>
+            <i className="fas fa-search"></i>
           </span>
         </div>
         <div>
@@ -97,7 +108,11 @@ class Home extends React.Component {
                   />
                 ))}
               </ul>
-              <Page totalCount={totalCount} searchCount={SEARCH_COUNT} />
+              <Page
+                totalCount={totalCount}
+                searchCount={SEARCH_COUNT}
+                currentPage={this.state.currentPage}
+              />
             </div>
           ) : (
             <div></div>

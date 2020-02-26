@@ -13,7 +13,7 @@ function App() {
     <BrowserRouter>
       <Navigation />
       <Route path="/" exact={true} component={Home}></Route>
-      <Route path="/:page" component={Home}></Route>
+      <Route path="/page/:page" component={Home}></Route>
       {/* <Route path="/kakao_auth/:params" component={KakaoAuth}></Route> */}
       {/* <Route path="/kakao_auth" exact={true} component={KakaoAuth}></Route> */}
       <Route path="/book/:id" component={Detail} />
